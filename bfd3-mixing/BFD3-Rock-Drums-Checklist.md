@@ -116,6 +116,56 @@ Room / Amb ─► GROUP: ROOMS ─────┘
 
 ---
 
+## ★ Pro Edition — цепочки на топовых плагинах
+
+> Альтернатива стоковым плагинам Cubase. Порядок в списке = порядок в цепочке.
+
+### Бочка (KICK)
+- [ ] EQ: **FabFilter Pro-Q 4** — HPF 35 Гц · динам. вырез 300–450 Гц · +4 дБ @ 4 кГц
+- [ ] Гейт: **FabFilter Pro-G** (режим Punch)
+- [ ] Консоль: **bx_console SSL 4000 E** / Waves SSL EV2 — лёгкий драйв входа
+- [ ] Суб Kick Out: **Waves Submarine / RBass** @ 40–50 Гц — чуть-чуть
+- [ ] Комп группы: **UAD/Arturia 1176** или **Distressor/Arousor** — 4:1, Attack медленный (5–7 у 1176), GR 3–5 дБ
+- [ ] Грязь: **Soundtoys Decapitator** — стиль A (Ampex), Drive 2–3, Mix 30–50%
+
+### Рабочий (SNARE)
+- [ ] **bx_console SSL E** — гейт + EQ в одном
+- [ ] **Pro-Q 4**: динамический вырез 400–600 Гц
+- [ ] **CLA-76 / UAD 1176**: Attack 3–4, Release 7, GR 3–5 дБ
+- [ ] **Decapitator**: стиль N (Neve) — тепло, A — злость
+- [ ] **Smack Attack / SPL Transient Designer** — если мало щелчка
+- [ ] **oeksound soothe2** — если «звенит» серединой
+
+### Томы (TOMS)
+- [ ] **Pro-G** (Punch) → **SSL strip** → **Transient Designer** (Attack +4, Sustain −2)
+
+### Оверхеды (OH)
+- [ ] **soothe2** — мягко давит резкость тарелок 3–6 кГц (must-have)
+- [ ] **UAD LA-2A** — GR 1–2 дБ
+- [ ] **Maag EQ4 / Kush Clariphonic** — Air +2 дБ @ 20 кГц
+
+### Rooms
+- [ ] **Distressor (NUKE)** или **UAD Fatso (Spank)**
+- [ ] **Soundtoys Devil-Loc Deluxe**: Crush 3–5 — стадион одной ручкой
+- [ ] **Decapitator**: стиль P (Pultec), Drive 4+
+
+### Smash (параллельная шина)
+- [ ] **CLA-76 / UAD 1176 в режиме All-Buttons-In** — взрывной NY-звук
+
+### Реверб
+- [ ] **Valhalla VintageVerb** (Plate 1.4 с) — лучшая цена/качество
+- [ ] **UAD EMT 140** · **LiquidSonics Seventh Heaven** (Bricasti M7) — топ
+
+### Drum Bus
+- [ ] **Cytomic The Glue / SSL Native Bus Comp 2**: 4:1, GR 1–3 дБ
+- [ ] **Shadow Hills Mastering Comp** — «железный» клей (по желанию)
+- [ ] **FabFilter Saturn 2**: Warm Tape, Drive 2–4 дБ
+- [ ] **FabFilter Pro-L 2**: Transparent
+
+> 💡 Бюджетные заменители: TDR Nova (дин. EQ), TDR Kotelnikov (glue), Analog Obsession (бесплатные эмуляции 1176/SSL/Fatso).
+
+---
+
 ## ❌ Типичные ошибки
 
 1. Сведение стереовыхода BFD3 вместо мультивыхода
