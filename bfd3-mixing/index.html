@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BFD3 → Cubase · Чеклист сведения барабанов для рока</title>
+<style>
+  :root{
+    --bg:#181a20; --panel:#21242d; --txt:#ebedf2; --sub:#969caa;
+    --blue:#3478f6; --orange:#f08228; --red:#dc3c50; --purple:#8c5adc; --green:#3cb478;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+  .wrap{max-width:880px;margin:0 auto;padding:24px 20px 80px}
+  header{padding:36px 0 8px}
+  h1{font-size:1.9rem;margin:0 0 6px}
+  header p{color:var(--sub);margin:0 0 18px}
+  .btns{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
+  .btn{display:inline-block;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:600;font-size:.95rem}
+  .btn-o{background:var(--orange);color:#fff}
+  .btn-b{background:var(--blue);color:#fff}
+  .btn-p{background:var(--purple);color:#fff}
+  section{margin-top:34px}
+  h2{display:flex;align-items:center;gap:12px;font-size:1.25rem;border-bottom:2px solid #333845;padding-bottom:8px}
+  .num{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;border-radius:8px;color:#fff;font-size:1rem}
+  h3{color:var(--blue);font-size:1.02rem;margin:20px 0 6px}
+  ul.cl{list-style:none;padding-left:4px;margin:8px 0}
+  ul.cl li{margin:7px 0;padding-left:2px}
+  ul.cl label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+  ul.cl input{margin-top:4px;width:16px;height:16px;accent-color:var(--orange);flex:none}
+  ul.cl input:checked + span{color:var(--sub);text-decoration:line-through}
+  .note{color:var(--sub);font-size:.88rem;font-style:italic;margin:4px 0 0 30px}
+  .err{background:#2b1d22;border:1px solid var(--red);border-radius:12px;padding:16px 20px;margin-top:30px}
+  .err h2{color:var(--red);border:none;padding:0;margin:0 0 10px}
+  .err li{margin:6px 0}
+  img.diag{width:100%;border-radius:12px;margin-top:10px}
+  code{background:#2a2e39;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .progress{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+  .bar{height:8px;background:#2a2e39;border-radius:6px;overflow:hidden}
+  .bar div{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--green));transition:width .3s}
+  .ptxt{color:var(--sub);font-size:.85rem;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>🥁 Сведение барабанов BFD3 для рока в Cubase</h1>
+  <p>Пошаговый чеклист: мультивыход → группы → Drum Bus. Галочки сохраняются в браузере.</p>
+  <div class="btns">
+    <a class="btn btn-o" href="BFD3-Rock-Drums-Checklist.pdf" download>⬇ Скачать PDF</a>
+    <a class="btn btn-b" href="routing-diagram.png" download>⬇ Схема PNG</a>
+    <a class="btn btn-p" href="BFD3-Rock-Drums-Checklist.md" download>⬇ Markdown</a>
+  </div>
+</header>
+
+<div class="progress"><div class="bar"><div id="pbar"></div></div><div class="ptxt" id="ptxt">0 / 0 выполнено</div></div>
+
+<section>
+  <h2><span class="num" style="background:var(--purple)">0</span>Подготовка в BFD3</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Выбран рок-кит: бочка 22", металлический или глубокий деревянный рабочий</span></label></li>
+    <li><label><input type="checkbox"><span><b>Damping</b>: бочка — побольше (убрать гул), рабочий — умеренно</span></label></li>
+    <li><label><input type="checkbox"><span><b>Tuning</b>: рабочий чуть вверх (панч), томы не конфликтуют друг с другом</span></label></li>
+    <li><label><input type="checkbox"><span><b>Bleed</b> в микрофонах бочки и рабочего снижен до ~30–50% (но НЕ в ноль!)</span></label></li>
+    <li><label><input type="checkbox"><span>Встроенные эффекты BFD3 (EQ, компрессоры) выключены</span></label></li>
+    <li><label><input type="checkbox"><span>Ambient-каналы (OH, Room, Amb) оставлены включёнными</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--blue)">1</span>Мультивыход BFD3 → Cubase</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Каналы разведены: <code>Kick In→1</code> <code>Kick Out→2</code> <code>Snare Top→3</code> <code>Snare Btm→4</code> <code>HiHat→5</code> <code>Toms→6–8</code> <code>OH→St 9/10</code> <code>Room→St 11/12</code> <code>Amb→St 13/14</code></span></label></li>
+    <li><label><input type="checkbox"><span>Cubase: <b>F11 → правый клик по BFD3 → Activate Outputs</b> — включены все выходы</span></label></li>
+    <li><label><input type="checkbox"><span>Моно-источники — в моно, амбиент — в стерео</span></label></li>
+    <li><label><input type="checkbox"><span>Панорама: бочка/рабочий в центр, хэт ~30–40% вбок, томы веером, направление томов совпадает с OH</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--orange)">2</span>Структура групп в Cubase</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Созданы группы: <b>KICK · SNARE · TOMS · ROOMS · DRUM BUS</b></span></label></li>
+    <li><label><input type="checkbox"><span>Все группы и прямые каналы (HiHat, OH) заведены в DRUM BUS</span></label></li>
+    <li><label><input type="checkbox"><span>Созданы FX-каналы: <b>Drum Verb</b> (реверб) и <b>Smash</b> (параллельная компрессия)</span></label></li>
+  </ul>
+  <img class="diag" src="routing-diagram.png" alt="Схема роутинга BFD3 → Cubase">
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--red)">3</span>Gain staging и фаза</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Пики каналов около <b>−18…−12 dBFS</b>, фейдеры на 0</span></label></li>
+    <li><label><input type="checkbox"><span><b>Snare Bottom: полярность перевёрнута</b> (MixConsole → Pre → ø) — проверено на слух со Snare Top</span></label></li>
+    <li><label><input type="checkbox"><span>Kick In vs Kick Out: выбрана полярность, где больше низа</span></label></li>
+    <li><label><input type="checkbox"><span>Соло OH + бочка + рабочий: низ не «худеет» при добавлении OH</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--orange)">4</span>Поканальная обработка</h2>
+  <h3>🦵 Бочка (KICK)</h3>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Kick In EQ: HPF 35–40 Гц · вырез −4…−6 дБ @ 300–450 Гц · +3…+5 дБ @ 3–5 кГц (щелчок)</span></label></li>
+    <li><label><input type="checkbox"><span>Kick In Gate — если мешает bleed</span></label></li>
+    <li><label><input type="checkbox"><span>Kick Out EQ: +2…+4 дБ @ 50–60 Гц · LPF 8–10 кГц</span></label></li>
+    <li><label><input type="checkbox"><span>Группа: Comp 4:1, <b>Attack 20–30 мс</b>, Release 50–100 мс/Auto, GR 3–5 дБ</span></label></li>
+    <li><label><input type="checkbox"><span>По вкусу: Magneto III, Saturation 20–30%</span></label></li>
+  </ul>
+  <h3>🥁 Рабочий (SNARE)</h3>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Top EQ: HPF 70–90 Гц · тело +2…+4 дБ @ 150–250 Гц · −3…−5 дБ @ 400–600 Гц · +3 дБ @ 4–6 кГц</span></label></li>
+    <li><label><input type="checkbox"><span>Bottom: HPF 300–400 Гц (только пружина), фейдер −6…−10 дБ ниже Top</span></label></li>
+    <li><label><input type="checkbox"><span>Группа: Comp 4:1, Attack 10–20 мс, Release 80–150 мс, GR 4–6 дБ</span></label></li>
+    <li><label><input type="checkbox"><span>Для агрессии: второй быстрый комп (1176-стиль), GR 2–3 дБ</span></label></li>
+    <li><label><input type="checkbox"><span>EnvelopeShaper: Attack +2…+4 дБ, если не хватает щелчка</span></label></li>
+    <li><label><input type="checkbox"><span>Send → Drum Verb</span></label></li>
+  </ul>
+  <h3>🛢️ Томы (TOMS)</h3>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Gate на каждом томе: Attack мин., Hold 100–200 мс, Release 200–400 мс</span></label></li>
+    <li><label><input type="checkbox"><span>EQ: HPF 50–60 Гц (флор) / 70–80 Гц (альты) · −4 дБ @ 300–500 Гц · +3 дБ @ 4–6 кГц</span></label></li>
+    <li><label><input type="checkbox"><span>Группа: Comp 4:1, Attack 20 мс, GR 3–4 дБ · Send → Drum Verb</span></label></li>
+  </ul>
+  <h3>🎩 Хэт</h3>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>HPF 200–300 Гц; при резкости — узкий вырез или динамический EQ @ 3–4 кГц</span></label></li>
+  </ul>
+  <h3>☁️ Оверхеды (OH)</h3>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Выбран подход: «только тарелки» (HPF 400–500 Гц) или «полная картина» (HPF 100–150 Гц)</span></label></li>
+    <li><label><input type="checkbox"><span>Шелф +1–2 дБ выше 10 кГц (воздух); при жёстких тарелках — динамический EQ 3–5 кГц</span></label></li>
+    <li><label><input type="checkbox"><span>Компрессия лёгкая (2:1, GR 1–2 дБ) или нет</span></label></li>
+  </ul>
+  <h3>🏠 Room / Amb (ROOMS) — «размер» барабанов</h3>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Компрессор: Ratio 8:1–20:1, Attack/Release быстрые, <b>GR 10+ дБ</b> — пусть качает</span></label></li>
+    <li><label><input type="checkbox"><span>По вкусу: Magneto III / Distortion для грязи</span></label></li>
+    <li><label><input type="checkbox"><span>Фейдер вкачен под микс: от «чуть воздуха» до «стадионного грохота»</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--purple)">5</span>Параллельная компрессия (Smash)</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Send'ы с KICK, SNARE, TOMS → FX Smash (пост-фейдер, 0 дБ)</span></label></li>
+    <li><label><input type="checkbox"><span>Комп: Ratio 10:1+, Attack мин., Release быстрый, GR 10–15 дБ</span></label></li>
+    <li><label><input type="checkbox"><span>EQ на Smash: +3 дБ @ 100 Гц и @ 8 кГц</span></label></li>
+    <li><label><input type="checkbox"><span>Фейдер Smash поднят с −∞ до плотности (обычно −10…−6 дБ от основного)</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--purple)">6</span>Реверберация (Drum Verb)</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>REVerence (Plate/Studio Room) или RoomWorks · plate <b>1.2–1.8 с</b></span></label></li>
+    <li><label><input type="checkbox"><span>HPF 300 Гц + LPF 8 кГц на ревербе</span></label></li>
+    <li><label><input type="checkbox"><span><b>Pre-delay 20–40 мс</b> — хвост отделён от удара</span></label></li>
+    <li><label><input type="checkbox"><span>Бочка в реверб не идёт (или чуть-чуть)</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--red)">7</span>Драм-бас (DRUM BUS)</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Glue-комп: 2:1–4:1, Attack 10–30 мс, Release Auto/0.1 c, <b>GR всего 1–3 дБ</b></span></label></li>
+    <li><label><input type="checkbox"><span>Magneto III: Saturation 15–25%</span></label></li>
+    <li><label><input type="checkbox"><span>Финальный EQ: «улыбка» +1–1.5 дБ @ 60–80 Гц и @ 10 кГц — по необходимости</span></label></li>
+    <li><label><input type="checkbox"><span>Лимитер на пару дБ — если выпрыгивают пики томов</span></label></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num" style="background:var(--blue)">8</span>Финальные штрихи</h2>
+  <ul class="cl">
+    <li><label><input type="checkbox"><span>Автоматизация: ROOMS и Drum Verb +1.5–2 дБ в припевах</span></label></li>
+    <li><label><input type="checkbox"><span>Velocity/humanize в Groove-редакторе BFD3 (особенно хэт)</span></label></li>
+    <li><label><input type="checkbox"><span>Баланс от бочки: бочка → рабочий (поровну) → OH → остальное</span></label></li>
+    <li><label><input type="checkbox"><span>Сравнение с референсом на одинаковой громкости</span></label></li>
+    <li><label><input type="checkbox"><span>Проверка в <b>моно</b> (Control Room) — фазовые проблемы OH</span></label></li>
+  </ul>
+</section>
+
+<div class="err">
+  <h2>❌ Типичные ошибки</h2>
+  <ul>
+    <li>Сведение стереовыхода BFD3 вместо мультивыхода</li>
+    <li>Забытая полярность Snare Bottom</li>
+    <li>Слишком быстрая атака компрессора на бочке/рабочем — убивает панч</li>
+    <li>Полностью вырезанный bleed — «мёртвый» звук</li>
+    <li>Реверб без HPF — каша внизу</li>
+  </ul>
+</div>
+
+</div>
+<script>
+const boxes=[...document.querySelectorAll('.cl input')];
+const KEY='bfd3-checklist';
+const saved=JSON.parse(localStorage.getItem(KEY)||'[]');
+boxes.forEach((b,i)=>{b.checked=!!saved[i];b.addEventListener('change',()=>{
+  localStorage.setItem(KEY,JSON.stringify(boxes.map(x=>x.checked)));upd();});});
+function upd(){const n=boxes.filter(b=>b.checked).length;
+  document.getElementById('pbar').style.width=(100*n/boxes.length)+'%';
+  document.getElementById('ptxt').textContent=n+' / '+boxes.length+' выполнено';}
+upd();
+</script>
+</body>
+</html>
