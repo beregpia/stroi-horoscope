@@ -119,25 +119,30 @@ Room / Amb ─► GROUP: ROOMS ─────┘
 ## ★ Pro Edition — цепочки на топовых плагинах
 
 > Альтернатива стоковым плагинам Cubase. Порядок в списке = порядок в цепочке.
+> **В скобках — куда ставить:** `[канал …]` = отдельный канал BFD3, `[группа …]` = групповой трек.
+> Принцип: EQ и гейты — на каналах (чиним каждый микрофон), компрессия и сатурация — на группах (обрабатываем барабан как целое).
 
 ### Бочка (KICK)
-- [ ] EQ: **FabFilter Pro-Q 4** — HPF 35 Гц · динам. вырез 300–450 Гц · +4 дБ @ 4 кГц
-- [ ] Гейт: **FabFilter Pro-G** (режим Punch)
-- [ ] Консоль: **bx_console SSL 4000 E** / Waves SSL EV2 — лёгкий драйв входа
-- [ ] Суб Kick Out: **Waves Submarine / RBass** @ 40–50 Гц — чуть-чуть
-- [ ] Комп группы: **UAD/Arturia 1176** или **Distressor/Arousor** — 4:1, Attack медленный (5–7 у 1176), GR 3–5 дБ
-- [ ] Грязь: **Soundtoys Decapitator** — стиль A (Ampex), Drive 2–3, Mix 30–50%
+- [ ] `[канал Kick In]` EQ: **FabFilter Pro-Q 4** — HPF 35 Гц · динам. вырез 300–450 Гц · +4 дБ @ 4 кГц
+- [ ] `[канал Kick In]` Гейт: **FabFilter Pro-G** (режим Punch)
+- [ ] `[канал Kick Out]` EQ: **Pro-Q 4** — +3.5 дБ @ 55 Гц · −3 дБ @ 250 Гц · LPF 9 кГц
+- [ ] `[канал Kick Out]` Суб: **Waves Submarine / RBass** @ 40–50 Гц — чуть-чуть (опционально)
+- [ ] `[группа KICK]` Консоль: **bx_console SSL 4000 E** / Waves SSL EV2 — лёгкий драйв входа
+- [ ] `[группа KICK]` Комп: **UAD/Arturia 1176** или **Distressor/Arousor** — 4:1, Attack медленный (3 у 1176 — шкала обратная!), GR 3–5 дБ
+- [ ] `[группа KICK]` Грязь: **Soundtoys Decapitator** — стиль A (Ampex), Drive 2–3, Mix 30–50%
 
 ### Рабочий (SNARE)
-- [ ] **bx_console SSL E** — гейт + EQ в одном
-- [ ] **Pro-Q 4**: динамический вырез 400–600 Гц
-- [ ] **CLA-76 / UAD 1176**: Attack 3–4, Release 7, GR 3–5 дБ
-- [ ] **Decapitator**: стиль N (Neve) — тепло, A — злость
-- [ ] **Smack Attack / SPL Transient Designer** — если мало щелчка
-- [ ] **oeksound soothe2** — если «звенит» серединой
+- [ ] `[канал Snare Top]` **bx_console SSL E** — гейт + EQ в одном
+- [ ] `[канал Snare Top]` **Pro-Q 4**: динамический вырез 400–600 Гц
+- [ ] `[канал Snare Top]` **oeksound soothe2** — если «звенит» серединой
+- [ ] `[канал Snare Btm]` полярность **ø!** · HPF 350 Гц · фейдер −8 дБ ниже Top
+- [ ] `[группа SNARE]` **CLA-76 / UAD 1176**: Attack 3–4, Release 7, GR 3–5 дБ
+- [ ] `[группа SNARE]` **Decapitator**: стиль N (Neve) — тепло, A — злость
+- [ ] `[группа SNARE]` **Smack Attack / SPL Transient Designer** — если мало щелчка
 
 ### Томы (TOMS)
-- [ ] **Pro-G** (Punch) → **SSL strip** → **Transient Designer** (Attack +4, Sustain −2)
+- [ ] `[каждый том]` **Pro-G** (Punch) → EQ → **Transient Designer** (Attack +4, Sustain −2)
+- [ ] `[группа TOMS]` **Pro-C 2** / комп: 4:1, Attack 20 мс, GR 3–4 дБ
 
 ### Оверхеды (OH)
 - [ ] **soothe2** — мягко давит резкость тарелок 3–6 кГц (must-have)
