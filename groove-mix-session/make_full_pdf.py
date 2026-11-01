@@ -251,13 +251,44 @@ pdf.check("Соло KICK + BASS: должны звучать как один и�
 
 pdf.h2("Шаг 8.5 · Вокал: лид + 2 бэка (→ VOX и BACKS)")
 pdf.h3("Чистка от бяк (до всего!) — порядок: ремонт → шум → щелчки/дыхания → де-эссер → резонансы", RED)
-pdf.check("1. iZotope RX офлайн: Mouth De-click (щелчки губ) · Spectral De-noise Learn, Reduction 6–12 дБ · "
-          "De-hum (гул) · Spectral Repair (точечные бяки). Бюджет: Clarity Vx / Bertom Denoiser")
-pdf.check("2. Дыхания: DeBreath/RX на −10…−15 дБ — НЕ в ноль, вокал без вдохов мёртв!")
+pdf.check("1а. RX Spectral De-noise (офлайн!): Learn на тишине → Reduction 6–12 дБ. Бюджет: Clarity Vx / Bertom Denoiser")
+pdf.img(os.path.join(IMG, "clean-rx-denoise.png"))
+pdf.check("1б. RX Mouth De-click: Sensitivity 3–5 — щелчки губ. Плюс De-hum (гул) и Spectral Repair (точечные бяки кистью)")
+pdf.img(os.path.join(IMG, "clean-rx-declick.png"))
+pdf.check("2. Дыхания: RX Breath Control / Waves DeBreath на −10…−15 дБ")
+pdf.img(os.path.join(IMG, "clean-debreath.png"))
 pdf.check("3. Де-эссер (Pro-DS Single Vocal): 5–9 кГц, GR 2–4 дБ только на 'с/ц'")
-pdf.check("4. soothe2: Depth 4–6, зона 1–8 кГц — гнусавость/жёсткость/звон динамически (Delta-проверка!)")
-pdf.check("5. EQ-хирургия: свип 150–500 Гц → вырезы Q 2–3. Адреса: 200 бубнит · 400–500 коробка · 1k гнусаво · 3k жёстко")
-pdf.check("6. Интонация: VariAudio/Melodyne ≤ 50% — идеальный питч убивает вайб жанра")
+pdf.img(os.path.join(IMG, "clean-prods.png"))
+pdf.check("4. soothe2: гнусавость/жёсткость/звон — динамически")
+pdf.img(os.path.join(IMG, "clean-soothe2.png"))
+pdf.check("5. EQ-хирургия: свип узким Q по 150–500 Гц → вырезы −3…−5 дБ, Q 2–3")
+pdf.img(os.path.join(IMG, "clean-eq-sweep.png"))
+pdf.check("6. Интонация: VariAudio (в Cubase Pro!) / Melodyne — коррекция ≤ 50%")
+
+# Золотые правила — рамка
+if pdf.get_y() > 215:
+    pdf.add_page()
+_y = pdf.get_y() + 2
+pdf.set_fill_color(252, 243, 228)
+pdf.set_draw_color(*ACCENT)
+pdf.set_line_width(0.5)
+pdf.rect(16, _y, 178, 42, style="DF")
+pdf.set_xy(22, _y + 4)
+pdf.set_font("DejaVu", "B", 11)
+pdf.set_text_color(*RED)
+pdf.cell(0, 6, "★ Золотые правила чистки вокала", new_x="LMARGIN", new_y="NEXT")
+pdf.set_font("DejaVu", "", 9.2)
+pdf.set_text_color(*TXT)
+for r in ["RX — всегда ОФЛАЙН-рендером, не реалтайм-плагином · оригинал файла сохранить!",
+          "Не перечищать: дыхания −10 дБ (не в ноль) · шумодав 6–12 дБ (не 30)",
+          "После каждого шага — A/B с оригиналом: стало лучше или просто тише/мертвее?",
+          "Лёгкая комната и вдохи — часть вайба Kravitz/Morcheeba. Стерильный вокал = бяка наоборот",
+          "Порядок важен: сначала хирургия (RX), потом косметика (EQ/комп)"]:
+    pdf.set_x(22)
+    pdf.multi_cell(166, 5.4, "• " + r, new_x="LMARGIN", new_y="NEXT")
+pdf.set_y(_y + 44)
+pdf.ln(2)
+
 pdf.h3("Основная цепочка лида")
 pdf.img(os.path.join(IMG, "eq-vocal-lead.png"))
 pdf.img(os.path.join(IMG, "comp-vocal-1176.png"))
