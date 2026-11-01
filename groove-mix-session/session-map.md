@@ -91,17 +91,105 @@ FX: Verb (тёмная Room) · FAT (LA-2A параллель) — как в gro
 
 ---
 
-## 3. Порядок сведения
+## 3. Пошаговая обработка — с картинками
 
-- [ ] **Фазы:** Snare bottom ø; Kick beater vs front (низа больше?); OH + ядро (низ не худеет?); Overhead HH_Cow vs Overhead — тоже проверить ø!
-- [ ] **Барабаны по groove-карточкам** — всё 1-в-1: LA-2A на бочке, жирный рабочий 180 Гц, тёмные OH, Fatso на руме, плёнка на DRUM BUS
-- [ ] **Ковбелл** 🔔: HPF 300 Гц · LPF 8 кГц · панорама туда же, где он в OH (слушайте HH_Cow!) · фейдер СКРОМНО (−10…−14 дБ под хэтом) · чуть Decapitator N — винтаж. Jamiroquai-грув любит ковбелл, но ковбелл-доминант = комедия 😄
-- [ ] **Гитары (GTR):** HPF 90–100 Гц (низ отдаём бочке/басу) · лёгкий комп 2:1, GR 2–3 дБ · панорамы: Guit 2 ← L30-50, Guit 3 → R30-50, основная — центр/чуть вбок · для funk-скрейпов (если есть) — яркость оставить
-- [ ] **Keys:** HPF 100 Гц · вырез −2 дБ @ 200–350 Гц если мутнит рабочего · LA-2A GR 1–2 дБ
-- [ ] **Синты (Serum/Spire):** HPF 100–150 Гц (синтетический низ дерётся с бочкой!) · слои Spire — прослушать по одному, лишние выключить · лёгкий сайдчейн от бочки (−1…−2 дБ дак) добавит грува
-- [ ] **Баланс жанра:** рабочий ≥ бочки · хэт заметный · гитары вокруг барабанов, не поверх · синты — подложка
-- [ ] **A/B с Master.wav** (соло-кнопкой, на одинаковой громкости!) — где у автора ярче/жирнее/шире?
-- [ ] MIX BUS: плёнка/Glue как на DRUM BUS в карточках, но ещё легче (GR ~1 дБ)
+> Барабанные картинки — из `../bfd3-groove/img/`, они общие для жанра.
+> Новые (гитары/клавиши/синты/ковбелл/микс-бас) — в `img/` этой папки.
+
+### Шаг 1. Фазы (до любых плагинов!)
+
+- [ ] **Snare bottom → ø** (MixConsole → Pre)
+- [ ] Kick beater vs Kick front: вместе должно быть БОЛЬШЕ низа, чем по одному. Нет → ø на front
+- [ ] OH + бочка + рабочий: низ не «худеет»? → иначе ø на OH
+- [ ] **Overhead HH_Cow vs Overhead** — тот же тест! Два OH-микрофона = главный кандидат на гребёнку
+
+### Шаг 2. Бочка (Kick beater + Kick front → группа KICK)
+
+![Kick In](../bfd3-groove/img/eq-kick-in.png)
+![Kick Out](../bfd3-groove/img/eq-kick-out.png)
+![LA-2A](../bfd3-groove/img/comp-kick-la2a.png)
+
+- [ ] `Kick beater`: EQ по кривой Kick In (круглая атака 1.8 кГц, не клик!)
+- [ ] `Kick front`: EQ по кривой Kick Out (тело +4 дБ @ 70 Гц)
+- [ ] Группа KICK: LA-2A GR 3–4 дБ → Decapitator T, Mix 30%
+
+### Шаг 3. Рабочий (Snare top + bottom → группа SNARE)
+
+![Snare Top](../bfd3-groove/img/eq-snare-top.png)
+![Snare 1176](../bfd3-groove/img/comp-snare-1176.png)
+
+- [ ] `Snare top`: ЖИР +4 дБ @ 180 Гц, LPF 12k
+- [ ] `Snare bottom`: ø! · HPF 400 · фейдер −10…−12 дБ ниже Top
+- [ ] Группа: CLA-76 ленивый (Attack 2, Release 5, GR 2–4) — ghost-ноты дышат!
+
+### Шаг 4. Томы и хэт
+
+![Toms](../bfd3-groove/img/eq-toms.png)
+
+- [ ] `Tom 1/2/3`: EQ по кривой · гейт мягкий (Range −12) или без
+- [ ] `HiHat extra dry` — основной: HPF 250 · для Morcheeba-вайба shelf −2 дБ @ 8k
+- [ ] `HiHat`, `HH wet` — MUTE (wet можно вернуть −12 дБ как спецэффект)
+
+### Шаг 5. Оверхеды и комната
+
+![OH](../bfd3-groove/img/eq-oh-vintage.png)
+![Rooms EQ](../bfd3-groove/img/eq-rooms.png)
+![Fatso](../bfd3-groove/img/comp-rooms-fatso.png)
+
+- [ ] `Overhead`: полная картина, HPF 90, ТЁМНЫЙ верх (shelf −2.5 @ 9k)
+- [ ] `Overhead HH_Cow`: подмешать −6…−8 дБ к основному (фаза проверена на Шаге 1!)
+- [ ] `Room` → группа ROOMS: EQ → Fatso/Kotelnikov GR 4–6 дБ
+
+### Шаг 6. Ковбелл 🔔
+
+![Cowbell](img/eq-cowbell.png)
+
+- [ ] HPF 300 · LPF 8k · узкий −3 дБ @ 650 Гц, если «звенит»
+- [ ] Панорама — как слышно в Overhead HH_Cow (обычно чуть вправо/влево)
+- [ ] Фейдер: −10…−14 дБ ПОД хэтом · чуть Decapitator N для винтажа
+
+### Шаг 7. Гитары (Guit 1/2/3 → группа GTR)
+
+![Guitar EQ](img/eq-guitar.png)
+![Guitar Comp](img/comp-guitar.png)
+
+- [ ] На каждой: HPF 95 · −2.5 дБ @ 300 (мутность) · LPF 11k (винтаж!)
+- [ ] Панорамы: Guit 2 ← L30–50 · Guit 3 → R30–50 · Guit — центр/чуть вбок
+- [ ] Группа GTR: LA-2A или Pro-C 2 (2:1, GR 2–3 дБ) — едва-едва
+- [ ] `* dry` версии — MUTE (запас под реамп)
+
+### Шаг 8. Клавиши и синты (→ группа SYNTH)
+
+![Keys](img/eq-keys.png)
+![Keys LA-2A](img/comp-keys-la2a.png)
+![Synth](img/eq-synth.png)
+![Sidechain](img/comp-sidechain.png)
+
+- [ ] `Keys`: HPF 100 · −2 дБ @ 250 (место рабочему) · LA-2A GR 1–2
+- [ ] `Serum 2/3`, `Spire-1.5*`: слои прослушать ПО ОДНОМУ, лишние MUTE
+- [ ] На каждом синте: HPF 130 (24 дБ/окт!) · shelf −2 @ 10k
+- [ ] **Группа SYNTH: сайдчейн-комп от Kick front** — Ratio 2:1, Attack 5 ms, Release 120 ms, GR 1–2 дБ. Синты «приседают» под бочку — это и есть грув! (В Cubase: Pro-C 2/Compressor → активировать Side-Chain → в Sends канала Kick front послать на SC-вход)
+
+### Шаг 9. Шины
+
+![Tape](../bfd3-groove/img/knob-tape.png)
+![Glue](../bfd3-groove/img/comp-bus-glue.png)
+![Drum Bus EQ](../bfd3-groove/img/eq-drumbus.png)
+
+- [ ] DRUM BUS: плёнка 15 IPS (+2…+4) → Glue 2:1 GR 1–2 → EQ винтажный тон
+- [ ] FX FAT и FX Verb — по groove-карточкам (LA-2A параллель, тёмная Room 0.9 с)
+
+![Mix Bus Tape](img/knob-mixbus-tape.png)
+![Mix Bus EQ](img/eq-mixbus.png)
+
+- [ ] MIX BUS: плёнка мягче (+1…+2) → Glue GR ~1 дБ → shelf +1 @ 80 / −1 @ 13k
+- [ ] Лимитер здесь НЕ нужен (это сведение, не мастеринг) — только контроль пиков
+
+### Шаг 10. Баланс и сверка
+
+- [ ] Баланс жанра: **рабочий ≥ бочки** · хэт заметный · гитары вокруг барабанов · синты — подложка
+- [ ] **A/B с Master.wav** на одинаковой громкости: где у автора жирнее/ярче/шире?
+- [ ] Проверка в моно · проверка на маленьких колонках
 
 ---
 
