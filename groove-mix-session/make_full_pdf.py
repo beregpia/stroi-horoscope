@@ -250,7 +250,15 @@ pdf.check("Сатурация: Drive 2–3, Mix 30–40% — гармоники 
 pdf.check("Соло KICK + BASS: должны звучать как один инструмент (бочка — удар, бас — нота)")
 
 pdf.h2("Шаг 8.5 · Вокал: лид + 2 бэка (→ VOX и BACKS)")
-pdf.check("Де-эссер ПЕРВЫМ: 5–8 кГц, GR 2–4 дБ только на 'с/ц'")
+pdf.h3("Чистка от бяк (до всего!) — порядок: ремонт → шум → щелчки/дыхания → де-эссер → резонансы", RED)
+pdf.check("1. iZotope RX офлайн: Mouth De-click (щелчки губ) · Spectral De-noise Learn, Reduction 6–12 дБ · "
+          "De-hum (гул) · Spectral Repair (точечные бяки). Бюджет: Clarity Vx / Bertom Denoiser")
+pdf.check("2. Дыхания: DeBreath/RX на −10…−15 дБ — НЕ в ноль, вокал без вдохов мёртв!")
+pdf.check("3. Де-эссер (Pro-DS Single Vocal): 5–9 кГц, GR 2–4 дБ только на 'с/ц'")
+pdf.check("4. soothe2: Depth 4–6, зона 1–8 кГц — гнусавость/жёсткость/звон динамически (Delta-проверка!)")
+pdf.check("5. EQ-хирургия: свип 150–500 Гц → вырезы Q 2–3. Адреса: 200 бубнит · 400–500 коробка · 1k гнусаво · 3k жёстко")
+pdf.check("6. Интонация: VariAudio/Melodyne ≤ 50% — идеальный питч убивает вайб жанра")
+pdf.h3("Основная цепочка лида")
 pdf.img(os.path.join(IMG, "eq-vocal-lead.png"))
 pdf.img(os.path.join(IMG, "comp-vocal-1176.png"))
 pdf.img(os.path.join(IMG, "comp-vocal-la2a.png"))
