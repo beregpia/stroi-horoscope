@@ -195,6 +195,60 @@ pdf.check("Kick beater vs front: вместе низа должно быть Б�
 pdf.check("OH + бочка + рабочий: низ не 'худеет'? → иначе ø на OH")
 pdf.check("Overhead HH_Cow vs Overhead — тот же тест, главный кандидат на гребёнку!")
 
+pdf.h2("Шаг 1.5 · Чистка барабанных каналов (до EQ и компрессии!)")
+pdf.note("Порядок: де-рум/шумодав (офлайн) → гейты → свипы резонансов → фильтры. "
+         "Гейты всегда ДО компрессоров: компрессор поднимает bleed, и гейт после него работает хуже.")
+
+pdf.h3("Шумодав от помещения (если комната 'коробит' закрытые микрофоны)", RED)
+pdf.img(os.path.join(IMG, "dclean-deroom.png"))
+pdf.check("Zynaptiq UNVEIL / Accentize DeRoom Pro: Reduction 3–6 дБ на kick/snare/toms — офлайн-рендером")
+pdf.check("Кнопка DIFF — слушаем, ЧТО уходит: должна уходить комната, не тело барабана")
+pdf.check("OH и Room НЕ трогать — там комната и есть звук! · шипение преампов: RX De-noise / Bertom (6–10 дБ)")
+
+pdf.h3("Бочка")
+pdf.img(os.path.join(IMG, "dclean-kick-gate.png"))
+pdf.img(os.path.join(IMG, "dclean-kick-sweep.png"))
+pdf.check("Гейт beater: Range −15 дБ (НЕ −inf!) · SC-фильтр 50–100 Гц — реагирует только на 'бум'")
+pdf.check("Свип: гул ноты (60–120 Гц) и картон (250–500) — вырезы по адресам вашей бочки")
+pdf.check("HPF 30 Гц — инфра-мусор жрёт хедрум")
+
+pdf.h3("Рабочий")
+pdf.img(os.path.join(IMG, "dclean-snare-ring.png"))
+pdf.img(os.path.join(IMG, "dclean-snare-btm-gate.png"))
+pdf.check("Хэт в Snare top: динамический EQ 6–10 кГц или гейт Range −6…−8 дБ максимум — GHOST-НОТЫ НЕПРИКОСНОВЕННЫ!")
+pdf.check("Кольцо: свип 400–900 Гц → вырез −4…−6 дБ Q 4–6 (звенит только на громких → динамический)")
+pdf.check("Красивое винтажное кольцо — ОСТАВИТЬ, это вайб Kravitz! Чистим только противное")
+pdf.check("Bottom: гейт Range −10 дБ — дребезг пружины между ударами")
+
+pdf.h3("Томы, хэт, амбиент")
+pdf.img(os.path.join(IMG, "dclean-toms-gate.png"))
+pdf.check("Томы: гейт Hold 180/Release 300/Range −12 дБ ИЛИ Strip Silence руками + кроссфейды 10–20 мс")
+pdf.check("Симпатический гул томов: свип 80–200 Гц → вырез −3…−4 дБ")
+pdf.check("HiHat: только HPF 250 · OH/Room: НЕ ЧИСТИТЬ — bleed там и есть клей (только фазы и HPF)")
+
+# Золотые правила чистки барабанов
+if pdf.get_y() > 222:
+    pdf.add_page()
+_y = pdf.get_y() + 2
+pdf.set_fill_color(252, 243, 228)
+pdf.set_draw_color(*ACCENT)
+pdf.set_line_width(0.5)
+pdf.rect(16, _y, 178, 36, style="DF")
+pdf.set_xy(22, _y + 4)
+pdf.set_font("DejaVu", "B", 11)
+pdf.set_text_color(*RED)
+pdf.cell(0, 6, "★ Золотые правила чистки барабанов", new_x="LMARGIN", new_y="NEXT")
+pdf.set_font("DejaVu", "", 9.2)
+pdf.set_text_color(*TXT)
+for r in ["Range гейта −10…−18 дБ, не −inf — прибрать bleed, а не стереть",
+          "Ghost-ноты и bleed = жизнь грува. Чистим бяки, не характер",
+          "Гейты ДО компрессоров · де-рум офлайн-рендером · A/B после каждого шага",
+          "Сомневаетесь — вполовину меньше. Это Kravitz, а не метал"]:
+    pdf.set_x(22)
+    pdf.multi_cell(166, 5.4, "• " + r, new_x="LMARGIN", new_y="NEXT")
+pdf.set_y(_y + 38)
+pdf.ln(2)
+
 pdf.h2("Шаг 2 · Бочка (beater + front → KICK)")
 pdf.img(os.path.join(GIMG, "eq-kick-in.png"))
 pdf.img(os.path.join(GIMG, "eq-kick-out.png"))
