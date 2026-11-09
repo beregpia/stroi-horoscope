@@ -273,6 +273,24 @@ pdf.img(os.path.join(GIMG, "comp-rooms-fatso.png"))
 pdf.check("Overhead: полная картина, HPF 90, ТЁМНЫЙ верх (shelf −2.5 @ 9k)")
 pdf.check("HH_Cow: подмешать −6…−8 дБ · Room → ROOMS: EQ → Fatso GR 4–6 дБ")
 
+pdf.h2("Шаг 5.5 · МОДНЫЕ РУМЫ — параллели и трюки")
+pdf.note("Основной рум (Fatso) уже стоит по Шагу 5. Это ДОБАВКИ: одна-две, не все сразу! "
+         "Параллель выключили — микса должно стать жалко. Не жалко = не нужна.")
+pdf.h3("1. Devil Crush — раздавленный рум (вайб Kravitz)")
+pdf.img(os.path.join(IMG, "modern-devilloc.png"))
+pdf.check("Devil-Loc Deluxe (Crush 5–7, Darkness 3–4) или 1176 All-Buttons-In · под основным румом −10…−6 дБ")
+pdf.check("Фишка: автоматом фейдера появляется только в припевах — припев 'раскрывается'")
+pdf.h3("2. Trash Mic — грязный моно-слой (Tchad Blake)")
+pdf.img(os.path.join(IMG, "modern-trashmic.png"))
+pdf.check("HPF 200 → LPF 2.5k → Decapitator (P, Drive 5–7) → MONO · чуть-чуть под широкими OH")
+pdf.h3("3. Room Duck — дышащий рум")
+pdf.img(os.path.join(IMG, "modern-roomduck.png"))
+pdf.check("Комп на руме с SC от бочки: 4:1 / 1 ms / 150 ms / GR 3–4 — приседает на удар, цветёт между")
+pdf.h3("4. Transient Designer — больше комнаты, меньше каши")
+pdf.img(os.path.join(IMG, "modern-transient.png"))
+pdf.check("Attack −3…−5, Sustain +4…+6 — рум превращается в чистый 'воздух и размер'")
+pdf.check("Комната маленькая? Track Delay +15…30 мс = стены 'отодвигаются' · потом проверить фазы!")
+
 pdf.h2("Шаг 6 · Ковбелл")
 pdf.img(os.path.join(IMG, "eq-cowbell.png"))
 pdf.check("HPF 300 · LPF 8k · панорама как в OH · фейдер −10…−14 дБ ПОД хэтом · чуть Decapitator N")
@@ -372,6 +390,52 @@ pdf.check("Вокал сидит В миксе · рабочий ≥ бочки 
 pdf.check("A/B с Master.wav на одинаковой громкости")
 pdf.check("Моно-проверка (бэки L/R — кандидаты на пропажу!) · маленькие колонки")
 pdf.check("Автоматизация вокального фейдера по фразам (±1–1.5 дБ) — последние 10% магии")
+
+pdf.h2("БОНУС · Моднятина по всему миксу")
+pdf.note("Правило моднятины: сначала фундамент (Шаги 1–10), потом щепотка трюков. "
+         "Одна фишка за раз + A/B. Моднятина — приправа, не блюдо!")
+
+pdf.h3("Барабаны")
+pdf.img(os.path.join(IMG, "modern-drumsmash.png"))
+pdf.check("DRUM SMASH: посыл всех барабанов (без румов) → 1176 All-In, GR 8–12 · фейдер −10…−6 дБ")
+pdf.img(os.path.join(IMG, "modern-subkick.png"))
+pdf.check("KICK SUB: bx_subsynth/SubLab 40–60 Гц, Mix 15–25% — если бочке мало фундамента · в MONO")
+pdf.img(os.path.join(IMG, "modern-clipper.png"))
+pdf.check("CLIPPER на DRUM BUS: срезать 1–2 дБ пиков ДО Glue — плотнее без накачки")
+
+pdf.h3("Вокал")
+pdf.img(os.path.join(IMG, "modern-voxwidth.png"))
+pdf.check("VOX WIDTH: копия лида, питч ±9 центов L/R + delay 15/23 мс, 100% wet, −12 дБ под лидом")
+pdf.check("Проверка в МОНО обязательно — ширина не должна 'поплыть'")
+pdf.img(os.path.join(IMG, "modern-voxthrow.png"))
+pdf.check("VOX THROW: FX-канал 'телефон' (HPF 800 + LPF 3k + delay 1/4 fb 35%) · посыл автоматизацией на последнее слово фразы — Morcheeba-магия")
+
+pdf.h3("Синты и бэки")
+pdf.img(os.path.join(IMG, "modern-ott.png"))
+pdf.check("OTT (бесплатный, Xfer): Depth 10–25% на синтах/бэках — детали и плотность. 100% = EDM-пластик, нам нельзя!")
+
+# Золотые правила моднятины
+if pdf.get_y() > 228:
+    pdf.add_page()
+_y = pdf.get_y() + 2
+pdf.set_fill_color(252, 243, 228)
+pdf.set_draw_color(*ACCENT)
+pdf.set_line_width(0.5)
+pdf.rect(16, _y, 178, 36, style="DF")
+pdf.set_xy(22, _y + 4)
+pdf.set_font("DejaVu", "B", 11)
+pdf.set_text_color(*RED)
+pdf.cell(0, 6, "★ Золотые правила моднятины", new_x="LMARGIN", new_y="NEXT")
+pdf.set_font("DejaVu", "", 9.2)
+pdf.set_text_color(*TXT)
+for r in ["Параллель выключили — должно стать ЖАЛКО. Не жалко = выкинуть",
+          "Все параллели барабанов: проверить фазу (кнопка Ø) и задержку (Constrain Delay Comp.)",
+          "Моднятина после сведения, не вместо: сначала Шаги 1–10",
+          "Одна фишка за раз + A/B · в сумме параллели тише главного звука"]:
+    pdf.set_x(22)
+    pdf.multi_cell(166, 5.4, "• " + r, new_x="LMARGIN", new_y="NEXT")
+pdf.set_y(_y + 38)
+pdf.ln(2)
 
 pdf.h2("Грабли мультитрека", RED)
 pdf.set_font("DejaVu", "", 9.3)
