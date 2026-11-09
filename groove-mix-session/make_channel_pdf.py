@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Channel-Passport.pdf: каждый канал проекта — инсерты по порядку, посылы, что зачем."""
 from fpdf import FPDF
+from PIL import Image
 import os
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+IMG = os.path.join(BASE, "img")
+GIMG = os.path.join(BASE, "..", "bfd3-groove", "img")
 DEJAVU = "/usr/share/fonts/truetype/dejavu/"
 
 DARK = (32, 28, 24)
@@ -107,6 +110,17 @@ class PDF(FPDF):
         self.multi_cell(174, 4.5, text, new_x="LMARGIN", new_y="NEXT")
         self.ln(0.8)
 
+    def img(self, path, w=105):
+        if not os.path.exists(path):
+            return
+        iw, ih = Image.open(path).size
+        hh = w * ih / iw
+        if self.get_y() + hh > 274:
+            self.add_page()
+        x = (210 - w) / 2
+        self.image(path, x=x, w=w)
+        self.ln(1.5)
+
     def goldbox(self, title, rows, hbox):
         if self.get_y() + hbox > 272:
             self.add_page()
@@ -168,8 +182,10 @@ pdf.chan("01 · Kick beater (колотушка)", "→ группа KICK", "C",
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Gate (Cubase Gate / Pro-G)", "Thr под удар · Att 0.02 · Hold 100 · Rel 200 · Range −15 дБ · SC-фильтр 50–100 Гц",
         "рабочий и хэт лезут в микрофон бочки; Range −15 (не −inf) приглушает их, не делая дырок. SC-фильтр = гейт реагирует только на «бум»")
+pdf.img(os.path.join(IMG, "dclean-kick-gate.png"))
 pdf.ins(2, "Pro-Q (сток: Frequency)", "HPF 30 (24 дБ/окт) · вырез картона 300–450 −3…−4 (свип!) · +2.5…+3 @ 3–4k",
         "30 Гц — инфра-мусор жрёт хедрум; 300–450 — «коробка»; 3–4k — клик колотушки, читаемость бочки на маленьких колонках")
+pdf.img(os.path.join(GIMG, "eq-kick-in.png"))
 pdf.lab("ПОСЫЛЫ:", GREEN)
 pdf.snd("FAT (drum smash) — PRE, 0 дБ (общая параллель барабанов)")
 
@@ -177,6 +193,8 @@ pdf.chan("02 · Kick front (фронт бочки)", "→ группа KICK", "C
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q", "HPF 30 · +2 @ 60–80 (тело) · вырез гула: свип 60–120 узким Q, −3…−4 · LPF 8–10k",
         "этот микрофон = низ и «воздух» бочки; гул — нота барабана, которая бубнит; LPF убирает ненужный верх (клик уже есть в beater)")
+pdf.img(os.path.join(GIMG, "eq-kick-out.png"))
+pdf.img(os.path.join(IMG, "dclean-kick-sweep.png"))
 pdf.lab("ПОСЫЛЫ (этот канал — «донор» сайдчейнов!):", GREEN)
 pdf.snd("Side-chain → Compressor на BASS (0 дБ) — бас приседает от бочки")
 pdf.snd("Side-chain → Compressor на группе SYNTH (0 дБ) — синты дышат")
@@ -190,6 +208,8 @@ pdf.ins(1, "Pro-Q (динамическая полоса)", "полоса 6–10
         "хэт лезет в микрофон; гейтом грубо — убьёт ghost-ноты, а они = грув! Динамическая полоса давит только песок хэта")
 pdf.ins(2, "Pro-Q (вычитание)", "HPF 80 · вырез кольца: свип 400–900, −4…−6 Q 4–6 (если звенит противно) · +2…+3 @ 200 (тело)",
         "80 — ниже только гул; кольцо — нота обода (красивое винтажное — ОСТАВИТЬ); 200 Гц — «жир» рабочего по-Кравитцу")
+pdf.img(os.path.join(GIMG, "eq-snare-top.png"))
+pdf.img(os.path.join(IMG, "dclean-snare-ring.png"))
 pdf.ins(3, "Сатурация (Decapitator A / Magneto II)", "Drive 2–3 · Mix 20–30%",
         "гармоники делают рабочий «толще» на любой громкости — главный секрет жирного винтажного снейра")
 pdf.lab("ПОСЫЛЫ:", GREEN)
@@ -204,13 +224,17 @@ pdf.ins(1, "Gate", "Thr под удар · Hold 60 · Rel 150 · Range −10 д�
         "пружина отзывается «дзззз» на бас и гитары между ударами — прибрать, не отрезать")
 pdf.ins(2, "Pro-Q", "HPF 300 · shelf +2 @ 8k по вкусу",
         "низ уже есть в top-микрофоне; отсюда берём только песок пружины")
+pdf.img(os.path.join(GIMG, "eq-snare-bottom.png"))
+pdf.img(os.path.join(IMG, "dclean-snare-btm-gate.png"))
 
 pdf.chan("05 · Tom 1 / Tom 2 / Tom 3", "→ группа TOMS (→ DRUMS)", "по картине OH: T1 слегка L, T3 слегка R", "слышно только в филлах")
 pdf.lab("ИНСЕРТЫ (на каждом томе):")
 pdf.ins(1, "Strip Silence (Audio → Detect Silence) или Gate", "Hold 180 · Rel 300 · Range −12 · кроссфейды 10–20 мс",
         "между филлами томы только собирают гул бочки и рабочего — главная грязь барабанной сессии")
+pdf.img(os.path.join(IMG, "dclean-toms-gate.png"))
 pdf.ins(2, "Pro-Q", "HPF 60/80/100 (по размеру тома) · вырез гула: свип 80–200, −3…−4 · вырез мути 300–500 −3 · +3…+4 @ 3–5k",
         "гул — симпатический резонанс (бочка качает том); 300–500 — картон; 3–5k — атака палочки, чтобы филл читался")
+pdf.img(os.path.join(GIMG, "eq-toms.png"))
 pdf.ins(3, "Comp (опц.)", "3:1 · Att 10–15 ms · GR 2–3 на филлах",
         "ровняет удары в филле; атака 10–15 мс пропускает щелчок")
 pdf.lab("ПОСЫЛЫ:", GREEN)
@@ -229,6 +253,7 @@ pdf.chan("07 · Overhead (основные)", "→ DRUMS напрямую", "с�
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q", "HPF 90 · shelf −2.5 @ 9k",
         "OH здесь — не «тарелочный» канал, а ЦЕЛАЯ установка сверху; HPF чистит кашу с бочкой, тёмный shelf — винтаж 70-х")
+pdf.img(os.path.join(GIMG, "eq-oh-vintage.png"))
 pdf.ins(2, "soothe2 (если тарелки колют)", "зона 3–10k · Depth 3–4 · Delta-проверка",
         "убирает гвоздь-частоты крэша, не трогая остальное")
 pdf.note("НЕ гейтить, не чистить bleed — он тут и есть звук. Только фазы (Шаг 1) решают всё.")
@@ -243,10 +268,13 @@ pdf.chan("09 · Room (комната)", "→ группа ROOMS (→ DRUMS)", "�
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q", "HPF 60–90 · вырез гула свипом при необходимости",
         "комнате оставляем мясо, но не грязь сабов")
+pdf.img(os.path.join(GIMG, "eq-rooms.png"))
 pdf.ins(2, "Fatso (бюджет: Magneto II + комп)", "Spank · Input до GR 4–6 · Warmth 3–5",
         "раздавленная комната = «дорогой» винтажный качач; это сердце звука Kravitz/Morcheeba")
+pdf.img(os.path.join(GIMG, "comp-rooms-fatso.png"))
 pdf.ins(3, "Comp SC (room duck, опц.)", "4:1 · Att 1 ms · Rel 150 · GR 3–4 · SC от Kick front",
         "комната приседает на удар бочки (низ не мылится) и расцветает между ударами — микс «дышит»")
+pdf.img(os.path.join(IMG, "modern-roomduck.png"))
 pdf.lab("ПАРАЛЛЕЛИ (отдельные FX-каналы, по желанию):", GREEN)
 pdf.snd("ROOM CRUSH: Devil-Loc (Crush 5–7, Dark 3–4) — PRE-посыл, фейдер −10…−6 под румом, автоматом в припевах")
 pdf.snd("TRASH: HPF 200 + LPF 2.5k + Decapitator P 5–7 + MONO — чуть-чуть, грязный центр")
@@ -255,6 +283,7 @@ pdf.chan("10 · Cowbell (КОВБЕЛЛ!)", "→ DRUMS напрямую", "ка�
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q", "HPF 300 · LPF 8k",
         "оставляем только «конк» — низ и песок ковбеллу не нужны")
+pdf.img(os.path.join(IMG, "eq-cowbell.png"))
 pdf.ins(2, "Decapitator N (опц.)", "Drive 2–3",
         "чуть грязи, чтобы ковбелл сел в винтажную картину, а не торчал студийной чистотой")
 
@@ -265,8 +294,10 @@ pdf.chan("11 · Guit (партия 1, печёная)", "→ группа GTR", 
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q", "HPF 80–100 · вырез 200–300 −2…−3 если мутно · +2 @ 2.5–3.5k по вкусу",
         "HPF отдаёт низ басу и бочке; 200–300 — «шерсть»; 2.5–3.5k — читаемость чёса")
+pdf.img(os.path.join(IMG, "eq-guitar.png"))
 pdf.ins(2, "Comp (1176-style)", "4:1 · Att 3 (средне) · Rel 7 (быстро) · GR 2–3",
         "ровняет чёс в «мотор» — гитара держит грув, не прыгая по громкости")
+pdf.img(os.path.join(IMG, "comp-guitar.png"))
 pdf.lab("ПОСЫЛЫ:", GREEN)
 pdf.snd("DLY 8TH — чуть (−16…−12): движение в припеве")
 pdf.snd("VERB PLATE — совсем чуть или ничего (печёная уже с пространством)")
@@ -291,6 +322,7 @@ pdf.chan("14 · Keys", "→ группа SYNTH", "стерео как есть �
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q", "HPF 150–200 · вырез 2–4k −2…−3 если конфликт с вокалом",
         "низ клавиш — каша с басом; 2–4k — территория вокала, клавиши туда не пускаем")
+pdf.img(os.path.join(IMG, "eq-keys.png"))
 pdf.lab("ПОСЫЛЫ:", GREEN)
 pdf.snd("VERB PLATE — по вкусу (клавишам идёт пространство)")
 
@@ -298,20 +330,26 @@ pdf.chan("15 · Serum 2 / Serum 3 / Spire-слои (НЕ бас)", "→ груп
 pdf.lab("ИНСЕРТЫ (на каждом слое):")
 pdf.ins(1, "Pro-Q", "HPF 150–250 (каждому слою!) · лишние слои Spire — MUTE",
         "место внизу только для БАСА и БОЧКИ; пять слоёв пэдов внизу = грязь. Меньше слоёв = толще микс")
+pdf.img(os.path.join(IMG, "eq-synth.png"))
 pdf.ins(2, "OTT (опц.)", "Depth 10–25% · Time 150",
         "плотность и «дорогая» детальность; больше 25% — EDM-пластик, не наш жанр")
+pdf.img(os.path.join(IMG, "modern-ott.png"))
 pdf.note("Общий сайдчейн — НЕ здесь, а на группе SYNTH (см. группы). Бас-слой сюда НЕ идёт!")
 
 pdf.chan("16 · BASS (найденный синт-слой)", "→ ПРЯМО В MIX BUS (не в SYNTH!)", "MONO (<150 Гц обязательно)", "вровень с бочкой: вместе = один инструмент")
 pdf.lab("ИНСЕРТЫ (строго по порядку):")
 pdf.ins(1, "Pro-Q", "HPF 30 · +2 @ 80 (тело) · −2 @ 250 (муть) · +2.5 @ 800 (читаемость) · LPF 7k",
         "80 — фундамент; 250 — там каша с гитарами; 800 — «телефонная» зона: бас слышно даже на телефоне")
+pdf.img(os.path.join(IMG, "eq-bass.png"))
 pdf.ins(2, "Comp", "4:1 · Att 15 ms · Rel auto/100 · GR 3–5",
         "бас должен быть РОВНЫМ как рельс — на нём стоит весь грув; атака 15 мс пропускает щипок")
+pdf.img(os.path.join(IMG, "comp-bass.png"))
 pdf.ins(3, "Comp №2 с сайдчейном", "3:1 · Att 1 ms · Rel 100 · GR 2–3 · SC от Kick front",
         "на каждый удар бочки бас чуть приседает → бочка пробивает, вместе качает. Сильнее, чем у SYNTH (там GR 1–2)")
+pdf.img(os.path.join(IMG, "comp-bass-sc.png"))
 pdf.ins(4, "Сатурация (Decapitator A)", "Drive 2–3 · Mix 30–40%",
         "гармоники переносят бас на маленькие колонки, где нет настоящего низа")
+pdf.img(os.path.join(IMG, "knob-bass-sat.png"))
 pdf.ins(5, "Утилита стерео (или Pro-Q по M/S)", "mono ниже 150 Гц",
         "стереонизбас разваливается в моно и на виниле/клубе — низ всегда в центре")
 
@@ -324,10 +362,13 @@ pdf.note("RX De-noise (Learn, 6–12 дБ) → Mouth De-click (Sens 3–5) → �
 pdf.lab("ИНСЕРТЫ:")
 pdf.ins(1, "Pro-Q (вычитание)", "HPF 80–100 · вырезы по свипу: ~200 бубнит / 400–500 коробка / ~1k гнусаво / 2.5–3.5k жёстко · −3…−5 Q 2–3",
         "сначала убираем бяки — потом всё остальное работает лучше. Адреса у каждого голоса свои: ищем свипом!")
+pdf.img(os.path.join(IMG, "eq-vocal-lead.png"))
 pdf.ins(2, "CLA-76 (1176)", "Ratio 4 · Att 3 · Rel 7 · GR 2–4 ТОЛЬКО на пиках",
         "ступень 1: быстрый ловит выбросы («П», «Т», крики) — дальше по цепи идёт уже ровный сигнал")
+pdf.img(os.path.join(IMG, "comp-vocal-1176.png"))
 pdf.ins(3, "CLA-2A (LA-2A)", "Peak Reduction до GR 3–5",
         "ступень 2: медленный оптический «шёлк» — фразы выравниваются, вокал плывёт над миксом стабильно")
+pdf.img(os.path.join(IMG, "comp-vocal-la2a.png"))
 pdf.ins(4, "Pro-DS (де-эссер)", "Single Vocal · 5–9k · GR 2–4",
         "компрессоры подняли «с-с-с» — убираем; после компрессора, не до!")
 pdf.ins(5, "soothe2", "зона 1–8k · Depth 4–6 · Sharpness 7",
@@ -338,14 +379,17 @@ pdf.lab("ПОСЫЛЫ:", GREEN)
 pdf.snd("VERB PLATE (1.2 s, pre-delay 40 ms) — основной объём; pre-delay держит разборчивость")
 pdf.snd("DLY 8TH (1/8 dotted, fb 20–30%) — глубина без каши; чуть-чуть, −16…−12")
 pdf.snd("THROW («телефон» + delay 1/4) — автоматизацией на последнее слово фразы")
+pdf.img(os.path.join(IMG, "knob-vocal-fx.png"))
 
 pdf.chan("18 · BACK VOCAL 1", "→ группа BACKS", "L50", "−8…−12 ПОД лидом")
 pdf.chan("19 · BACK VOCAL 2", "→ группа BACKS", "R50 (зеркало)", "−8…−12 ПОД лидом")
 pdf.lab("ИНСЕРТЫ (одинаковые на обоих):")
 pdf.ins(1, "Pro-Q", "HPF 150–200 (выше, чем у лида!) · LPF 10–12k",
         "бэки — рамка вокруг лида: им не нужны ни низ, ни верх лида, только середина-ширина")
+pdf.img(os.path.join(IMG, "eq-vocal-back.png"))
 pdf.ins(2, "Comp", "GR 5–7 (жёстче лида!)",
         "задавленные бэки превращаются в ровную «подушку» — не прыгают и не спорят с лидом")
+pdf.img(os.path.join(IMG, "comp-vocal-backs.png"))
 pdf.ins(3, "De-esser", "GR 3–5, жёстче лида",
         "хор «с-с-с» с двух сторон — самый противный артефакт; душим сильнее")
 pdf.lab("ПОСЫЛЫ:", GREEN)
@@ -358,10 +402,12 @@ pdf.part("ГРУППЫ (шины)")
 pdf.chan("KICK (beater + front)", "→ DRUMS", "C", "опора баланса")
 pdf.ins(1, "Comp (LA-2A style)", "GR 3–4",
         "склеивает два микрофона в ОДИН барабан с общей динамикой")
+pdf.img(os.path.join(GIMG, "comp-kick-la2a.png"))
 
 pdf.chan("SNARE (top + bottom)", "→ DRUMS", "C", "≥ бочки")
 pdf.ins(1, "Comp (1176)", "4:1 · Att 3 · Rel 7 · GR 3–5",
         "общий панч; атака 3 пропускает «щёлк», быстрый release возвращает жир")
+pdf.img(os.path.join(GIMG, "comp-snare-1176.png"))
 
 pdf.chan("TOMS (1+2+3)", "→ DRUMS", "—", "по филлам")
 pdf.ins(1, "Glue comp (опц.)", "2:1 · GR 1–2",
@@ -370,10 +416,12 @@ pdf.ins(1, "Glue comp (опц.)", "2:1 · GR 1–2",
 pdf.chan("DRUMS (всё ударное)", "→ MIX BUS", "—", "фундамент: строим баланс от него")
 pdf.ins(1, "Плёнка (Magneto II / tape)", "15 IPS · Drive +2…+4",
         "винтажное склеивание и мягкое округление пиков — «запись 70-х», а не сумма сэмплов")
+pdf.img(os.path.join(GIMG, "knob-tape.png"))
 pdf.ins(2, "Glue comp (SSL-style)", "2:1 · Att 30 · Rel auto · GR 1–2",
         "дышит вместе с грувом; больше 2 дБ — задушит комнату")
 pdf.ins(3, "Pro-Q", "общий тон: чуть −3k если жёстко, чуть +70–100 если худо",
         "финальная коррекция всей установки одним движением")
+pdf.img(os.path.join(GIMG, "eq-drumbus.png"))
 
 pdf.chan("ROOMS", "→ DRUMS", "—", "качач")
 pdf.note("Вся обработка — на канале Room (09). Группа нужна как точка для duck-компа и параллелей.")
@@ -396,10 +444,12 @@ pdf.note("VOX: вся работа на канале лида; на группе
 pdf.chan("MIX BUS", "→ Stereo Out", "—", "целевой уровень: пики −6…−3 dBFS, БЕЗ лимитера!")
 pdf.ins(1, "Плёнка", "мягче, чем на драмах: +1…+2",
         "общий винтажный «клей» всего микса")
+pdf.img(os.path.join(IMG, "knob-mixbus-tape.png"))
 pdf.ins(2, "Glue comp", "2:1 · GR ~1 дБ",
         "едва заметное общее дыхание; больше — услышит мастеринг и заплачет")
 pdf.ins(3, "Pro-Q", "shelf +1 @ 80 · shelf −1 @ 13k (по вкусу)",
         "тёплый низ, неяркий верх — тональный профиль жанра")
+pdf.img(os.path.join(IMG, "eq-mixbus.png"))
 
 # ============================================================
 pdf.part("FX-КАНАЛЫ (Add Track → Effect)")
@@ -407,6 +457,7 @@ pdf.part("FX-КАНАЛЫ (Add Track → Effect)")
 pdf.chan("VERB PLATE", "→ MIX BUS", "—", "по посылам")
 pdf.ins(1, "Плейт-ревер (Valhalla/REVerence)", "Plate · Decay 1.2 s · Pre-delay 40 ms",
         "общий «один зал» для вокала/рабочего/томов — всё в одном пространстве, как в студии 70-х")
+pdf.img(os.path.join(GIMG, "knob-verb.png"))
 pdf.ins(2, "Pro-Q ПОСЛЕ ревера", "HPF 200 · LPF 8k",
         "фильтрованный ревер слышен, но не мылит низ и не шипит сверху")
 
@@ -417,9 +468,13 @@ pdf.ins(1, "Delay", "1/8 dotted · Feedback 20–30% · HPF 300 / LPF 6k вну�
 pdf.chan("FAT (drum smash — параллель)", "→ DRUMS или MIX BUS", "—", "фейдер −10…−6 под барабанами")
 pdf.ins(1, "CLA-76", "ALL-BUTTONS · Input до GR 8–12 · Att 3 · Rel 7",
         "раздавленная копия всех барабанов, подмешанная снизу = жир и плотность; выключили — должно стать жалко")
+pdf.img(os.path.join(IMG, "modern-drumsmash.png"))
 
 pdf.chan("ROOM CRUSH / TRASH / THROW (по желанию)", "→ MIX BUS", "—", "см. бонус-главу моднятины")
 pdf.note("Devil-Loc на рум · trash-моно-слой · вокальный «телефон» — рецепты в Groove-Mix-Session.pdf, бонус-глава.")
+pdf.img(os.path.join(IMG, "modern-devilloc.png"))
+pdf.img(os.path.join(IMG, "modern-trashmic.png"))
+pdf.img(os.path.join(IMG, "modern-voxthrow.png"))
 
 pdf.part("MUTE-ЛИСТ (в микс НЕ идут)")
 pdf.note("Master.wav (это референс для A/B!) · Demo minus ×2 · Out 1-2 · A Output Audio Bus · KT Out ×2 · "
